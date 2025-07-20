@@ -1,5 +1,5 @@
 import random
-
+from tabulate import tabulate
 #---------------------------------------------declaring initial information--------------------------------
 
 employees = ['Martin', 'Trifon', 'Filip', 'Ivailo', 'Evgeni', 'Jivko', 'Nikolay', 'Alex']
@@ -25,7 +25,7 @@ shifts = ['1', '2']
 working_days_in_month = 22
 number_of_employees = len(employees)
 off_days_in_month_for_employees = 10
-
+working_hours_in_month_for_employees = 176
 #------------------------------------------calculating initial numbers -------------------------------------
 
 max_number_of_employees_per_day =round((number_of_employees * (working_days_in_month - off_days_in_month_for_employees))
@@ -66,23 +66,25 @@ filling_employees_shift_for_month(employees)
 
 #-------------------------------------------------filling schedule-----------------------------------------------
 
-for date in month:
-    shifts_for_day =['1','1','2','2']
-    employees_left = [e for e in employees]
-    schedule[date] = {}
+for date in month:                              # going through days of the month
+    shifts_for_day =['1','1','2','2']           # available shift for the day
+    employees_left = [e for e in employees]     # available employees for the day
+    schedule[date] = {}                         # initialize dictionary in schedule for the day
 
     for _ in range(max_number_of_employees_per_day):
-        random_employee = random.choice(employees_left)
-        random_shift = random.choice(shifts_for_day)
-        shifts_for_day.remove(random_shift)
+        random_employee = random.choice(employees_left)     # picking random employee
+        random_shift = random.choice(shifts_for_day)        # picking random shift from available shifts for the day
+        shifts_for_day.remove(random_shift)                 # removing selected shift from available shifts for the day
         current_date = schedule[date]
-        current_date.update({random_employee:random_shift})
-        employees_left.remove(random_employee)
+        current_date.update({random_employee:random_shift}) # asight employee with shift in schedule
+        employees_left.remove(random_employee)              # removing employee from available employees for the day
 
 
 #--------------------------------------printing schedule-----------------------------------
+headers = []
 for key in schedule.keys():
-    print(schedule[key])
+    headers.append(key)
+    # print(schedule[key])
 
 
 
